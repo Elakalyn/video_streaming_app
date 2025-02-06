@@ -2,7 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:video_streaming_app/firebase_options.dart';
+import 'package:video_streaming_app/.firebase_options.dart';
 import 'package:video_streaming_app/modules/history/history_screen.dart';
 import 'package:video_streaming_app/modules/home/cubit/home_cubit.dart';
 import 'package:video_streaming_app/modules/playlists/playlists.dart';
