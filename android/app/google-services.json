@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "844436692852",
+    "project_id": "video-app-906db",
+    "storage_bucket": "video-app-906db.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:844436692852:android:05631fac64dc904d051621",
+        "android_client_info": {
+          "package_name": "com.example.video_streaming_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDV_C-MyswKkzqz2vBrggoABmloWGFl-pc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
