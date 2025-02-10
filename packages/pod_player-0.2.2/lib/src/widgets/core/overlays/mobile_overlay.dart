@@ -71,8 +71,9 @@ class _MobileOverlay extends StatelessWidget {
                     podCtr.toggleVideoOverlay();
                   }
                 },
-                child: const Icon(
-                  Icons.settings,
+                child: Image.asset(
+                  'assets/Icons/settings.png',
+                  scale: 2,
                 ),
               ),
             ],

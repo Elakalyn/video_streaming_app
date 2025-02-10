@@ -12,28 +12,65 @@ class LayoutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<LayoutCubit, LayoutState>(
-      listener: (context, state) {},
-      builder: (context, state) {
-        return Scaffold(
-          appBar: AppBar(
-            title: Logo(),
-            actions: [
-              IconButton(
-                  icon: SearchIcon(),
-                  onPressed: () {
-                    context.pushNamed('search');
-                  }),
-              IconButton(
-                  icon: SettingsIcon(),
-                  onPressed: () {
-                    context.pushNamed('settings');
+      listener: (context, state) {
+        print(state);
+        if (state is MaximizeMiniplayerState) {
+          var cubit = LayoutCubit.get(context);
 
-                  }),
-              20.w,
-            ],
-          ),
-          bottomNavigationBar: NavBar(),
-          body: child,
+          Future.delayed(Duration(milliseconds: 200)).whenComplete(() {
+            context.go(
+                '/video?title=${cubit.currentVideoDetails['title']}&views=${cubit.currentVideoDetails['views']}&thumbnail=${cubit.currentVideoDetails['thumbnail']}&date=${cubit.currentVideoDetails['date']}&uploader=${cubit.currentVideoDetails['uploader']}&video_host=${cubit.currentVideoDetails['video_host']}');
+          });
+        }
+      },
+      builder: (context, state) {
+        var cubit = LayoutCubit.get(context);
+        return Stack(
+          children: [
+            Scaffold(
+              appBar: AppBar(
+                title: Logo(),
+                actions: [
+                  IconButton(
+                      icon: SearchIcon(),
+                      onPressed: () {
+                        context.pushNamed('search');
+                      }),
+                  IconButton(
+                      icon: SettingsIcon(),
+                      onPressed: () {
+                        context.pushNamed('settings');
+                      }),
+                  20.w,
+                ],
+              ),
+              bottomNavigationBar: NavBar(),
+              body: Stack(
+                children: [
+                  child,
+                  if (cubit.miniplayerMode)
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Miniplayer(),
+                    )
+                ],
+              ),
+            ),
+            SafeArea(
+              child: Column(children: [
+                GestureDetector(
+                  child: cubit.miniplayerBuilder(), // <---- Miniplayer (Video)
+                  onTap: () => cubit.maximizeMiniplayer(),
+                  onVerticalDragUpdate: (details) {
+                    if (details.primaryDelta! < 0) {
+                      cubit.maximizeMiniplayer();
+                    }
+                  },
+                ),
+                if (cubit.miniplayerMode) 60.h,
+              ]),
+            ),
+          ],
         );
       },
     );

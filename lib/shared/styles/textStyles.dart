@@ -39,4 +39,14 @@ class TextStyles {
     color: Colors.white,
     fontWeight: FontWeight.w700,
   );
+
+  static TextStyle miniplayerTitle = TextStyle(
+    fontSize: 14,
+    color: darkThemeValue ? Colors.white : Colors.black,
+  );
+
+  static TextStyle miniplayerUploader = TextStyle(
+    fontSize: 14,
+    color: HexColor('878787'),
+  );
 }

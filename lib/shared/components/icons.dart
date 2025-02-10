@@ -184,21 +184,30 @@ class PauseIcon extends StatelessWidget {
   }
 }
 
-class FullScreenIcon extends StatelessWidget {
-  FullScreenIcon({
+class PlayIcon extends StatelessWidget {
+  PlayIcon({
     super.key,
   });
   var state;
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: (){
-        // implement full screen function
-      },
-      child: Image.asset(
-        'assets/Icons/full_screen.png',
-        scale: 3,
-      ),
+    return Image.asset(
+      'assets/Icons/play.png',
+      scale: 1.7,
+    );
+  }
+}
+
+class CloseIcon extends StatelessWidget {
+  CloseIcon({
+    super.key,
+  });
+  var state;
+  @override
+  Widget build(BuildContext context) {
+    return Image.asset(
+      'assets/Icons/close.png',
+      scale: 1.33,
     );
   }
 }
@@ -230,6 +239,7 @@ class ForwardIcon extends StatelessWidget {
     );
   }
 }
+
 class LikeIcon extends StatelessWidget {
   LikeIcon({
     super.key,
@@ -243,6 +253,7 @@ class LikeIcon extends StatelessWidget {
     );
   }
 }
+
 class DislikeIcon extends StatelessWidget {
   DislikeIcon({
     super.key,
@@ -256,6 +267,7 @@ class DislikeIcon extends StatelessWidget {
     );
   }
 }
+
 class ShareIcon extends StatelessWidget {
   ShareIcon({
     super.key,
@@ -269,6 +281,7 @@ class ShareIcon extends StatelessWidget {
     );
   }
 }
+
 class DownloadIcon extends StatelessWidget {
   DownloadIcon({
     super.key,
@@ -282,6 +295,7 @@ class DownloadIcon extends StatelessWidget {
     );
   }
 }
+
 class SaveIcon extends StatelessWidget {
   SaveIcon({
     super.key,

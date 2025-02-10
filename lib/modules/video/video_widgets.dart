@@ -2,164 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:speed_up_flutter/speed_up_flutter.dart';
+import 'package:video_streaming_app/modules/layout/cubit/layout_cubit.dart';
 import 'package:video_streaming_app/shared/components/icons.dart';
 import 'package:video_streaming_app/shared/styles/textStyles.dart';
 import 'package:pod_player/pod_player.dart';
-
-class VideoStreamingCard extends StatelessWidget {
-  const VideoStreamingCard({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {},
-      child: Container(
-        color: Colors.black,
-        height: 215,
-        child: Stack(
-          children: [
-            SizedBox(
-              height: 210,
-              child: Image.asset(
-                'assets/Icons/video_bg.png',
-                fit: BoxFit.fitHeight,
-              ),
-            ),
-            Column(
-              children: [
-                Container(
-                  height: 210,
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 48,
-                        child: Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(4.0),
-                                child: DownIcon(),
-                              ),
-                              Spacer(),
-                              AutoplayIcon(),
-                              22.w,
-                              CastIcon(),
-                              22.w,
-                              SubtitleIcon(),
-                              22.w,
-                              SettingsIcon()
-                            ],
-                          ),
-                        ),
-                      ),
-                      30.h,
-                      SizedBox(
-                        height: 54,
-                        width: 214,
-                        child: Row(
-                          children: [
-                            CircleAvatar(
-                              radius: 38 / 2,
-                              child: RewindIcon(),
-                              backgroundColor: Colors.black.withOpacity(0.3),
-                            ),
-                            Spacer(),
-                            CircleAvatar(
-                              radius: 54 / 2,
-                              child: PauseIcon(),
-                              backgroundColor: Colors.black.withOpacity(0.3),
-                            ),
-                            Spacer(),
-                            CircleAvatar(
-                              radius: 38 / 2,
-                              child: ForwardIcon(),
-                              backgroundColor: Colors.black.withOpacity(0.3),
-                            ),
-                          ],
-                        ),
-                      ),
-                      44.h,
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 19.0),
-                        child: Row(
-                          children: [
-                            RichText(
-                              text: TextSpan(
-                                children: [
-                                  TextSpan(
-                                    text: '0:07',
-                                    style: TextStyle(
-                                      color: Colors.white
-                                          .withOpacity(1.0), // 100% opacity
-                                      fontSize: 14,
-                                      fontWeight:
-                                          FontWeight.w500, // Medium weight
-                                    ),
-                                  ),
-                                  TextSpan(
-                                    text: ' / ',
-                                    style: TextStyle(
-                                      color: Colors.white
-                                          .withOpacity(0.7), // 70% opacity
-                                      fontSize: 14,
-                                      fontWeight:
-                                          FontWeight.w500, // Medium weight
-                                    ),
-                                  ),
-                                  TextSpan(
-                                    text: '47:25',
-                                    style: TextStyle(
-                                      color: Colors.white
-                                          .withOpacity(0.7), // 70% opacity
-                                      fontSize: 14,
-                                      fontWeight:
-                                          FontWeight.w500, // Medium weight
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Spacer(),
-                            FullScreenIcon(),
-                          ],
-                        ),
-                      ),
-                      Spacer(),
-                      Transform.translate(
-                        offset: Offset(0, 5),
-                        child: Row(
-                          children: [
-                            Container(
-                              height: 2,
-                              color: Colors.white.withOpacity(0.2),
-                              child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: Container(
-                                  height: 2,
-                                  width: 90,
-                                  color: HexColor('E23325'),
-                                ),
-                              ),
-                            ),
-                            CircleAvatar(
-                              backgroundColor: HexColor('E23325'),
-                              radius: 6,
-                            )
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
 
 class VideoInteractions extends StatelessWidget {
   final title;
@@ -181,7 +27,7 @@ class VideoInteractions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.black,
+      color: HexColor('0F0F0F'),
       child: Padding(
         padding:
             const EdgeInsets.only(bottom: 12.0, left: 12, right: 12, top: 12),
@@ -225,7 +71,7 @@ class VideoInteractions extends StatelessWidget {
                   ),
                   12.w,
                   Text(
-                    'Figma',
+                    '$uploader',
                     style: TextStyle(
                       fontSize: 14,
                       color: Colors.white,
@@ -445,7 +291,9 @@ class VideoInteractions extends StatelessWidget {
 
 class PlayVideoFromNetwork extends StatefulWidget {
   final video_host;
-  const PlayVideoFromNetwork({Key? key, required this.video_host})
+  var videoTimestamp;
+  PlayVideoFromNetwork(
+      {Key? key, required this.video_host, this.videoTimestamp})
       : super(key: key);
 
   @override
@@ -458,12 +306,16 @@ class _PlayVideoFromNetworkState extends State<PlayVideoFromNetwork> {
   @override
   void initState() {
     controller = PodPlayerController(
-        playVideoFrom: PlayVideoFrom.network(
-          widget.video_host,
-          
-        ),
-        podPlayerConfig:
-            const PodPlayerConfig(autoPlay: true, videoQualityPriority: [360]))
+        playVideoFrom: PlayVideoFrom.networkQualityUrls(videoUrls: [
+          VideoQalityUrls(quality: 250, url: widget.video_host),
+          VideoQalityUrls(quality: 360, url: widget.video_host),
+          VideoQalityUrls(quality: 480, url: widget.video_host),
+          VideoQalityUrls(quality: 720, url: widget.video_host),
+          VideoQalityUrls(quality: 1080, url: widget.video_host),
+        ]),
+        podPlayerConfig: const PodPlayerConfig(
+          autoPlay: true,
+        ))
       ..initialise();
     super.initState();
   }
@@ -476,6 +328,12 @@ class _PlayVideoFromNetworkState extends State<PlayVideoFromNetwork> {
 
   @override
   Widget build(BuildContext context) {
+    var timestamp = LayoutCubit.get(context).currentVideoDetails['timestamp'];
+    if (timestamp != null) controller.videoSeekTo(timestamp);
+    LayoutCubit.get(context).miniplayerController = controller;
+    if (widget.video_host == LayoutCubit.get(context).iminiplayer_video_host) {
+      controller.hideOverlay();
+    } else {}
     return PodVideoPlayer(controller: controller);
   }
 }
