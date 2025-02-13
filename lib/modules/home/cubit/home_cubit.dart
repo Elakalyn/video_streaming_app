@@ -83,6 +83,8 @@ class HomeCubit extends Cubit<HomeState> {
               uploader: document['uploader'],
               views: document['views'],
               video_host: document['video_host'],
+              likes: document['likes'].length,
+              videoID: document.id,
             );
           },
           itemCount: querySnapshot.docs.length,
@@ -90,5 +92,4 @@ class HomeCubit extends Cubit<HomeState> {
       },
     );
   }
- 
 }

@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:speed_up_flutter/speed_up_flutter.dart';
 import 'package:video_streaming_app/modules/home/cubit/home_cubit.dart';
+import 'package:video_streaming_app/modules/layout/cubit/layout_cubit.dart';
 import 'package:video_streaming_app/shared/styles/textStyles.dart';
 
 class VideoCard extends StatelessWidget {
@@ -15,7 +16,9 @@ class VideoCard extends StatelessWidget {
     required this.views,
     required this.uploader,
     this.uploaderPfp,
-    this.video_host,
+    required this.video_host,
+    required this.likes,
+    required this.videoID,
   });
   final title;
   final thumbnail;
@@ -25,13 +28,27 @@ class VideoCard extends StatelessWidget {
   final uploader;
   final uploaderPfp;
   final video_host;
+  final likes;
+  final videoID;
 
   @override
   Widget build(BuildContext context) {
     date = HomeCubit.get(context).getTimeSinceDate(date);
     return GestureDetector(
       onTap: () {
-        context.go('/video?title=$title&views=$views&thumbnail=$thumbnail&date=$date&uploader=$uploader&video_host=$video_host');
+        LayoutCubit.get(context).currentVideoDetails.addAll({
+          'title': title,
+          'thumbnail': thumbnail,
+          'duration': duration,
+          'date': date,
+          'views': views,
+          'uploader': uploader,
+          'uploaderPfp': uploaderPfp,
+          'likes': likes,
+          'video_host': video_host,
+          'videoID': videoID,
+        });
+        context.go('/video');
       },
       child: Container(
         height: 313,

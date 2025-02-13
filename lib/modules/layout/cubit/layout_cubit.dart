@@ -1,4 +1,8 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -8,12 +12,16 @@ import 'package:video_streaming_app/modules/layout/layout_widgets.dart';
 import 'package:video_streaming_app/modules/video/video_widgets.dart';
 import 'package:video_streaming_app/shared/components/icons.dart';
 import 'package:pod_player/pod_player.dart';
+import 'package:video_streaming_app/shared/constants/constants.dart';
 import 'package:video_streaming_app/shared/styles/textStyles.dart';
 
 part 'layout_state.dart';
 
 class LayoutCubit extends Cubit<LayoutState> {
-  LayoutCubit() : super(LayoutInitial());
+  LayoutCubit() : super(LayoutInitial()) {
+    print('LayoutCubit init');
+    monitorConnection();
+  }
   static LayoutCubit get(context) => BlocProvider.of(context);
 
   var selectedIndex = 0;
@@ -30,6 +38,8 @@ class LayoutCubit extends Cubit<LayoutState> {
     selectedIndex = index;
     emit(BNBChangeState());
   }
+
+  Map currentVideoDetails = {'': ''};
 
   // Mini-Player
 
@@ -106,8 +116,8 @@ class LayoutCubit extends Cubit<LayoutState> {
   void enableMiniplayer({
     required var miniplayer_video_host,
   }) {
-     currentVideoDetails
-         .addAll({'timestamp': miniplayerController!.currentVideoPosition});
+    currentVideoDetails
+        .addAll({'timestamp': miniplayerController!.currentVideoPosition});
     miniplayerMode = true;
     iminiplayer_video_host = miniplayer_video_host;
     emit(EnableMiniplayerState());
@@ -129,5 +139,19 @@ class LayoutCubit extends Cubit<LayoutState> {
     emit(MiniplayerTogglePlayPause());
   }
 
-  Map currentVideoDetails = {'': ''};
+  // Connectivity
+
+  final Connectivity connectivity = Connectivity();
+  late StreamSubscription<List<ConnectivityResult>> subscription;
+
+  void monitorConnection() {
+    subscription = connectivity.onConnectivityChanged.listen((results) {
+      bool hasNetwork = results.any((result) =>
+          result == ConnectivityResult.wifi ||
+          result == ConnectivityResult.mobile);
+
+      // Emit new state with network status
+      emit(NetworkState(hasNetwork: hasNetwork));
+    });
+  }
 }

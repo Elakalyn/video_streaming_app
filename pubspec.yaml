@@ -44,6 +44,8 @@ dependencies:
   firebase_core: ^3.11.0
   intl: ^0.20.2
   skeletonizer: ^1.3.0
+  firebase_auth: ^5.4.2
+  shared_preferences: ^2.5.2
 dependency_overrides:
   pod_player:
     path: packages/pod_player-0.2.2
@@ -94,6 +96,8 @@ flutter:
     - assets/Icons/video_bg.png
     - assets/Icons/like.png
     - assets/Icons/dislike.png
+    - assets/Icons/like_filled.png
+    - assets/Icons/dislike_filled.png
     - assets/Icons/share.png
     - assets/Icons/download.png
     - assets/Icons/save.png

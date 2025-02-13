@@ -11,7 +11,7 @@ class PlaylistsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Play lists',
+          'Playlists',
           style: TextStyles.header,
         ),
       ),

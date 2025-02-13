@@ -11,37 +11,23 @@ import 'package:video_streaming_app/shared/components/video_card.dart';
 
 import '../layout/cubit/layout_cubit.dart';
 
-class VideoScreen extends StatelessWidget {
-  final title;
-  final date;
-  final video_host;
-  final views;
-  final uploader;
-  final thumbnail;
 
-  const VideoScreen(
-      {super.key,
-      required this.title,
-      required this.date,
-      required this.video_host,
-      required this.views,
-      required this.uploader,
-      required this.thumbnail});
+
+class VideoScreen extends StatelessWidget {
+  const VideoScreen({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     var cubit = LayoutCubit.get(context);
+    bool isLiked;
+    bool isDisliked;
     return BlocConsumer<LayoutCubit, LayoutState>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        
+      },
       builder: (context, state) {
-        cubit.currentVideoDetails.addAll({
-          'title': title,
-          'date': date,
-          'video_host': video_host,
-          'views': views,
-          'uploader': uploader,
-          'thumbnail': thumbnail,
-        });
         return Scaffold(
           body: SingleChildScrollView(
             child: SafeArea(
@@ -56,12 +42,14 @@ class VideoScreen extends StatelessWidget {
                             context.goNamed('home');
 
                             cubit.enableMiniplayer(
-                              miniplayer_video_host: video_host,
+                              miniplayer_video_host: LayoutCubit.get(context)
+                                  .currentVideoDetails['video_host'],
                             );
                           }
                         },
                         child: PlayVideoFromNetwork(
-                          video_host: video_host,
+                          video_host: LayoutCubit.get(context)
+                              .currentVideoDetails['video_host'],
                         ),
                       ),
                       Align(
@@ -71,7 +59,8 @@ class VideoScreen extends StatelessWidget {
                             context.goNamed('home');
 
                             cubit.enableMiniplayer(
-                              miniplayer_video_host: video_host,
+                              miniplayer_video_host: LayoutCubit.get(context)
+                                  .currentVideoDetails['video_host'],
                             );
                           },
                           icon: Image.asset(
@@ -82,14 +71,7 @@ class VideoScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  VideoInteractions(
-                    title: title,
-                    date: date,
-                    thumbnail: thumbnail,
-                    uploader: uploader,
-                    video_host: video_host,
-                    views: views,
-                  ),
+                  VideoInteractions(),
                   mockVideoCard()
                 ],
               ),

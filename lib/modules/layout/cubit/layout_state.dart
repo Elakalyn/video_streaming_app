@@ -18,3 +18,11 @@ final class MaximizeMiniplayerState extends LayoutState {}
 final class MiniplayerAnimationState extends LayoutState {}
 
 final class MiniplayerTogglePlayPause extends LayoutState {}
+
+// Connection States
+final class NetworkState extends LayoutState {
+  final bool
+      hasNetwork; // true = WiFi/Mobile Data available, false = no connection
+
+  NetworkState({required this.hasNetwork});
+}

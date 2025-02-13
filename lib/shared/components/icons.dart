@@ -1,4 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:speed_up_flutter/speed_up_flutter.dart';
+
+class Logo extends StatelessWidget {
+  const Logo({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Image.asset('assets/icon.png');
+  }
+}
 
 class HomeIcon extends StatelessWidget {
   HomeIcon({
@@ -243,28 +255,48 @@ class ForwardIcon extends StatelessWidget {
 class LikeIcon extends StatelessWidget {
   LikeIcon({
     super.key,
+    required this.liked,
   });
-  var state;
+  var liked;
   @override
   Widget build(BuildContext context) {
-    return Image.asset(
-      'assets/Icons/like.png',
-      scale: 3,
-    );
+    switch (liked) {
+      case true:
+        return Image.asset(
+          'assets/Icons/like_filled.png',
+          scale: 3,
+        );
+
+      default:
+        return Image.asset(
+          'assets/Icons/like.png',
+          scale: 3,
+        );
+    }
   }
 }
 
 class DislikeIcon extends StatelessWidget {
   DislikeIcon({
     super.key,
+    required this.disliked,
   });
-  var state;
+  var disliked;
   @override
   Widget build(BuildContext context) {
-    return Image.asset(
-      'assets/Icons/dislike.png',
-      scale: 3,
-    );
+    switch (disliked) {
+      case true:
+        return Image.asset(
+          'assets/Icons/dislike_filled.png',
+          scale: 3,
+        );
+
+      default:
+        return Image.asset(
+          'assets/Icons/dislike.png',
+          scale: 3,
+        );
+    }
   }
 }
 
@@ -307,5 +339,16 @@ class SaveIcon extends StatelessWidget {
       'assets/Icons/save.png',
       scale: 3,
     );
+  }
+}
+
+class ProfileIcon extends StatelessWidget {
+  ProfileIcon({
+    super.key,
+  });
+  var state;
+  @override
+  Widget build(BuildContext context) {
+    return Image.network('');
   }
 }

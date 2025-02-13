@@ -3,25 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:speed_up_flutter/speed_up_flutter.dart';
 import 'package:video_streaming_app/modules/layout/cubit/layout_cubit.dart';
-import 'package:video_streaming_app/modules/video/video_widgets.dart';
 import 'package:video_streaming_app/shared/components/icons.dart';
 import 'package:video_streaming_app/shared/styles/textStyles.dart';
-
-class Logo extends StatelessWidget {
-  const Logo({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        10.w,
-        Image.asset('assets/icon.png'),
-      ],
-    );
-  }
-}
 
 class NavBar extends StatelessWidget {
   const NavBar({
@@ -106,7 +89,9 @@ class Miniplayer extends StatelessWidget {
                         child: Row(
                           children: [
                             GestureDetector(
-                              child: cubit.miniplayerVideoPlaying ? PauseIcon() : PlayIcon(),
+                              child: cubit.miniplayerVideoPlaying
+                                  ? PauseIcon()
+                                  : PlayIcon(),
                               onTap: () {
                                 cubit.controlMiniplayer();
                               },
