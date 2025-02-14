@@ -16,7 +16,7 @@ class searchBar extends StatelessWidget {
     return Container(
       height: 40,
       decoration: BoxDecoration(
-        color: darkThemeValue ? Colors.grey[850] : HexColor('ECECEC'),
+        color: darkThemeValue! ? Colors.grey[850] : HexColor('ECECEC'),
         borderRadius: BorderRadius.circular(20),
       ),
       padding: EdgeInsets.symmetric(horizontal: 16),

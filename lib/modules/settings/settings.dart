@@ -3,6 +3,8 @@ import 'package:go_router/go_router.dart';
 import 'package:speed_up_flutter/speed_up_flutter.dart';
 import 'package:video_streaming_app/modules/auth/cubit/user_cubit.dart';
 import 'package:video_streaming_app/modules/playlists/playlists_widgets.dart';
+import 'package:video_streaming_app/network/local/cacheHelper.dart';
+import 'package:video_streaming_app/shared/constants/constants.dart';
 import 'package:video_streaming_app/shared/styles/textStyles.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -64,9 +66,33 @@ class GeneralSettings extends StatelessWidget {
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
           children: [
-            Text(
-              'GENERAL SETTINGS',
-              style: TextStyles.header,
+            ListTile(
+              title: Text(
+                'Change app theme',
+                style: TextStyles.previousSearch,
+              ),
+              trailing: Text(
+                darkThemeValue! ? 'Dark' : 'Light',
+                style: TextStyles.videoDetails,
+              ),
+              onTap: () {
+                
+                switch (darkThemeValue!) {
+                  case true:
+                    CacheHelper.saveData(key: 'darkTheme', value: false);
+                    break;
+                  case false:
+                    CacheHelper.saveData(key: 'darkTheme', value: true);
+                    break;
+                }
+                ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content:
+                  Text('Restart the app for the changes to occur.'),
+              duration: Duration(seconds: 4),
+            ),
+          );
+              },
             )
           ],
         ),

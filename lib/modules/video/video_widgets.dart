@@ -105,7 +105,7 @@ class VideoInteractions extends StatelessWidget {
                           width: 80,
                           height: 30,
                           decoration: BoxDecoration(
-                            color:darkThemeValue ? Colors.white : Colors.black,
+                            color:darkThemeValue! ? Colors.white : Colors.black,
                             borderRadius: BorderRadius.circular(16),
                           ),
                           child: Padding(
@@ -114,7 +114,7 @@ class VideoInteractions extends StatelessWidget {
                             child: Text(
                               'Subscribe',
                               style: TextStyle(
-                                color: darkThemeValue ? Colors.black : Colors.white,
+                                color: darkThemeValue! ? Colors.black : Colors.white,
                                 fontSize: 12,
                                 fontWeight: FontWeight.w500,
                               ),
@@ -130,9 +130,8 @@ class VideoInteractions extends StatelessWidget {
                   child: Row(
                     children: [
                       Container(
-                       
                         decoration: BoxDecoration(
-                          color: darkThemeValue
+                          color: darkThemeValue!
                               ? HexColor("1A1A1A")
                               : HexColor("F2F2F2"),
                           borderRadius: BorderRadius.circular(32),
@@ -180,7 +179,7 @@ class VideoInteractions extends StatelessWidget {
                       Container(
                         width: 81,
                         decoration: BoxDecoration(
-                          color: darkThemeValue
+                          color: darkThemeValue!
                               ? HexColor("1A1A1A")
                               : HexColor("F2F2F2"),
                           borderRadius: BorderRadius.circular(32),
@@ -203,7 +202,7 @@ class VideoInteractions extends StatelessWidget {
                       Container(
                         width: 109,
                         decoration: BoxDecoration(
-                          color: darkThemeValue
+                          color: darkThemeValue!
                               ? HexColor("1A1A1A")
                               : HexColor("F2F2F2"),
                           borderRadius: BorderRadius.circular(32),
@@ -226,7 +225,7 @@ class VideoInteractions extends StatelessWidget {
                       Container(
                         width: 75,
                         decoration: BoxDecoration(
-                          color: darkThemeValue
+                          color: darkThemeValue!
                               ? HexColor("1A1A1A")
                               : HexColor("F2F2F2"),
                           borderRadius: BorderRadius.circular(32),
@@ -251,7 +250,7 @@ class VideoInteractions extends StatelessWidget {
                 16.h,
                 Container(
                   decoration: BoxDecoration(
-                    color: darkThemeValue
+                    color: darkThemeValue!
                         ? HexColor("1A1A1A")
                         : HexColor("F2F2F2"),
                     borderRadius: BorderRadius.circular(12),

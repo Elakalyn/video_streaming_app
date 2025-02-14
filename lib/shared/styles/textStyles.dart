@@ -5,12 +5,12 @@ import 'package:video_streaming_app/shared/constants/constants.dart';
 class TextStyles {
   static TextStyle details = TextStyle(
     fontSize: 10,
-    color: darkThemeValue ? Colors.white : Colors.black,
+    color: darkThemeValue! ? Colors.white : Colors.black,
   );
 
   static TextStyle title = TextStyle(
     fontSize: 14,
-    color: darkThemeValue ? Colors.white : Colors.black,
+    color: darkThemeValue! ? Colors.white : Colors.black,
   );
 
   static TextStyle videoDetails = TextStyle(
@@ -32,7 +32,7 @@ class TextStyles {
 
   static TextStyle previousSearch = TextStyle(
     fontSize: 16,
-    color: darkThemeValue ? Colors.white : Colors.black,
+    color: darkThemeValue! ? Colors.white : Colors.black,
     fontWeight: FontWeight.w500,
   );
   static TextStyle header = const TextStyle(
@@ -43,7 +43,7 @@ class TextStyles {
 
   static TextStyle miniplayerTitle = TextStyle(
     fontSize: 14,
-    color: darkThemeValue ? Colors.white : Colors.black,
+    color: darkThemeValue! ? Colors.white : Colors.black,
   );
 
   static TextStyle miniplayerUploader = TextStyle(
@@ -54,16 +54,16 @@ class TextStyles {
   static TextStyle videoScreenTitle = TextStyle(
     fontSize: 18,
     height: 1.3,
-    color: darkThemeValue ? Colors.white : Colors.black,
+    color: darkThemeValue! ? Colors.white : Colors.black,
   );
   static TextStyle videoScreenUploader = TextStyle(
     fontSize: 14,
-    color: darkThemeValue ? Colors.white : Colors.black,
+    color: darkThemeValue! ? Colors.white : Colors.black,
     fontWeight: FontWeight.w500,
   );
   static TextStyle commentsPreview = TextStyle(
     overflow: TextOverflow.ellipsis,
-    color: darkThemeValue ? Colors.white : Colors.black,
+    color: darkThemeValue! ? Colors.white : Colors.black,
     fontSize: 12,
   );
 }

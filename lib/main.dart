@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
       userAuthenticated = true;
       print(uid);
     }
-
+    darkThemeValue ??= true;
     GoRouter router = GoRouter(
       initialLocation: userAuthenticated ? '/' : '/login',
       routes: [
@@ -141,7 +141,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp.router(
         theme: AppTheme.lightTheme,
         darkTheme: AppTheme.darkTheme,
-        themeMode: darkThemeValue ? ThemeMode.dark : ThemeMode.light,
+        themeMode: darkThemeValue! ? ThemeMode.dark : ThemeMode.light,
         routerConfig: router,
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,

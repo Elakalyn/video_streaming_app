@@ -49,7 +49,7 @@ class Miniplayer extends StatelessWidget {
         return Container(
           height: 54,
           width: 360,
-          color: darkThemeValue ? Colors.black : Colors.white, 
+          color: darkThemeValue! ? Colors.black : Colors.white, 
           child: Stack(
             children: [
               Row(

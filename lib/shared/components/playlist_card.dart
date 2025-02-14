@@ -18,7 +18,7 @@ class PlaylistsScreenVertical extends StatelessWidget {
           width: 140,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
-            color: darkThemeValue ? HexColor('272727') : Colors.grey,
+            color: darkThemeValue! ? HexColor('272727') : Colors.grey,
           ),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
