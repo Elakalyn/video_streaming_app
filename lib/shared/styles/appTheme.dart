@@ -5,8 +5,28 @@ import 'package:video_streaming_app/shared/styles/textStyles.dart';
 
 class AppTheme {
   static ThemeData lightTheme = ThemeData(
-      // TODO: Add light theme
-      );
+    scaffoldBackgroundColor: HexColor('FFFFFF'),
+    iconTheme: IconThemeData(
+      color: Colors.black,
+    ),
+    appBarTheme: AppBarTheme(
+        iconTheme: IconThemeData(
+          color: Colors.black,
+        ),
+        backgroundColor: HexColor('FFFFFF'),
+        scrolledUnderElevation: 0),
+    inputDecorationTheme: InputDecorationTheme(),
+    navigationBarTheme: NavigationBarThemeData(
+      backgroundColor: HexColor('FFFFFF'),
+      overlayColor:
+          WidgetStateProperty.all(Colors.transparent), // Removes splash effect
+      labelTextStyle: WidgetStatePropertyAll(TextStyles.details),
+      indicatorColor: HexColor('FFFFFF'),
+      iconTheme: WidgetStatePropertyAll(IconThemeData(
+        color: Colors.black,
+      )),
+    ),
+  );
 
   static ThemeData darkTheme = ThemeData(
     scaffoldBackgroundColor: HexColor('0F0F0F'),
@@ -30,6 +50,5 @@ class AppTheme {
         color: Colors.white,
       )),
     ),
-    
   );
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:speed_up_flutter/speed_up_flutter.dart';
 import 'package:video_streaming_app/shared/components/icons.dart';
+import 'package:video_streaming_app/shared/constants/constants.dart';
 import 'package:video_streaming_app/shared/styles/textStyles.dart';
 
 class PlaylistsScreenVertical extends StatelessWidget {
@@ -17,7 +18,7 @@ class PlaylistsScreenVertical extends StatelessWidget {
           width: 140,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
-            color: HexColor('272727'),
+            color: darkThemeValue ? HexColor('272727') : Colors.grey,
           ),
           child: Padding(
             padding: const EdgeInsets.all(8.0),

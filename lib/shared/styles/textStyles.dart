@@ -29,9 +29,10 @@ class TextStyles {
     color: HexColor('5CA4F8'),
     fontWeight: FontWeight.w500,
   );
-  static TextStyle previousSearch = const TextStyle(
+
+  static TextStyle previousSearch = TextStyle(
     fontSize: 16,
-    color: Colors.white,
+    color: darkThemeValue ? Colors.white : Colors.black,
     fontWeight: FontWeight.w500,
   );
   static TextStyle header = const TextStyle(
@@ -48,5 +49,21 @@ class TextStyles {
   static TextStyle miniplayerUploader = TextStyle(
     fontSize: 14,
     color: HexColor('878787'),
+  );
+
+  static TextStyle videoScreenTitle = TextStyle(
+    fontSize: 18,
+    height: 1.3,
+    color: darkThemeValue ? Colors.white : Colors.black,
+  );
+  static TextStyle videoScreenUploader = TextStyle(
+    fontSize: 14,
+    color: darkThemeValue ? Colors.white : Colors.black,
+    fontWeight: FontWeight.w500,
+  );
+  static TextStyle commentsPreview = TextStyle(
+    overflow: TextOverflow.ellipsis,
+    color: darkThemeValue ? Colors.white : Colors.black,
+    fontSize: 12,
   );
 }

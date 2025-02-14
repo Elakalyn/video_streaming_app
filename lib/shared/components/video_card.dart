@@ -55,7 +55,7 @@ class VideoCard extends StatelessWidget {
         child: Column(
           children: [
             Container(
-              color: HexColor('333333'),
+           
               height: 210,
               child: Stack(
                 children: [
@@ -86,7 +86,7 @@ class VideoCard extends StatelessWidget {
               ),
             ),
             Container(
-              color: HexColor('0F0F0F'),
+        
               width: double.maxFinite,
               height: 103,
               child: Padding(
@@ -138,7 +138,7 @@ class mockVideoCard extends StatelessWidget {
         child: Column(
           children: [
             Container(
-              color: HexColor('333333'),
+           
               height: 210,
               child: Stack(
                 children: [
@@ -169,7 +169,7 @@ class mockVideoCard extends StatelessWidget {
               ),
             ),
             Container(
-              color: HexColor('0F0F0F'),
+          
               width: double.maxFinite,
               height: 103,
               child: Padding(
@@ -221,7 +221,7 @@ class SkeletonVideoCard extends StatelessWidget {
         child: Column(
           children: [
             Container(
-              color: HexColor('333333'),
+         
               height: 210,
               child: Stack(
                 children: [
@@ -246,7 +246,7 @@ class SkeletonVideoCard extends StatelessWidget {
               ),
             ),
             Container(
-              color: HexColor('0F0F0F'),
+            
               width: double.maxFinite,
               height: 103,
               child: Padding(

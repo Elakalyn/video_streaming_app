@@ -3,6 +3,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:speed_up_flutter/speed_up_flutter.dart';
 import 'package:video_streaming_app/shared/components/icons.dart';
 import 'package:video_streaming_app/shared/components/video_card.dart';
+import 'package:video_streaming_app/shared/constants/constants.dart';
 import 'package:video_streaming_app/shared/styles/textStyles.dart';
 
 class searchBar extends StatelessWidget {
@@ -15,7 +16,7 @@ class searchBar extends StatelessWidget {
     return Container(
       height: 40,
       decoration: BoxDecoration(
-        color: Colors.grey[850],
+        color: darkThemeValue ? Colors.grey[850] : HexColor('ECECEC'),
         borderRadius: BorderRadius.circular(20),
       ),
       padding: EdgeInsets.symmetric(horizontal: 16),

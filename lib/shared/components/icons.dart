@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:speed_up_flutter/speed_up_flutter.dart';
+import 'package:video_streaming_app/shared/constants/constants.dart';
 
 class Logo extends StatelessWidget {
   const Logo({
@@ -24,11 +25,13 @@ class HomeIcon extends StatelessWidget {
       return Image.asset(
         'assets/Icons/home_filled.png',
         scale: 2,
+       color: darkThemeValue ? Colors.white : Colors.black,
       );
     } else {
       return Image.asset(
         'assets/Icons/home_outlined.png',
         scale: 2,
+        color: darkThemeValue ? Colors.white : Colors.black,
       );
     }
   }
@@ -46,10 +49,12 @@ class LibraryIcon extends StatelessWidget {
       return Image.asset(
         'assets/Icons/library_filled.png',
         scale: 2,
+        color: darkThemeValue ? Colors.white : Colors.black,
       );
     } else {
       return Image.asset(
         'assets/Icons/library_outlined.png',
+        color: darkThemeValue ? Colors.white : Colors.black,
         scale: 2,
       );
     }
@@ -66,6 +71,7 @@ class SettingsIcon extends StatelessWidget {
     return Image.asset(
       'assets/Icons/settings.png',
       scale: 2,
+      color: darkThemeValue ? Colors.white : Colors.black,
     );
   }
 }
@@ -80,6 +86,7 @@ class SearchIcon extends StatelessWidget {
     return Image.asset(
       'assets/Icons/search.png',
       scale: 2,
+      color: darkThemeValue ? Colors.white : Colors.black,
     );
   }
 }
@@ -94,6 +101,7 @@ class PlaybackIcon extends StatelessWidget {
     return Image.asset(
       'assets/Icons/playback.png',
       scale: 2,
+      color: darkThemeValue ? Colors.white : Colors.black,
     );
   }
 }
@@ -108,6 +116,7 @@ class JumpIcon extends StatelessWidget {
     return Image.asset(
       'assets/Icons/jump.png',
       scale: 2,
+      color: darkThemeValue ? Colors.white : Colors.black,
     );
   }
 }
@@ -122,6 +131,7 @@ class PlaylistIcon extends StatelessWidget {
     return Image.asset(
       'assets/Icons/playlist.png',
       scale: 2,
+      color: darkThemeValue ? Colors.white : Colors.black,
     );
   }
 }
@@ -136,6 +146,7 @@ class DownIcon extends StatelessWidget {
     return Image.asset(
       'assets/Icons/down.png',
       scale: 3,
+      color: darkThemeValue ? Colors.white : Colors.black,
     );
   }
 }
@@ -178,6 +189,7 @@ class SubtitleIcon extends StatelessWidget {
     return Image.asset(
       'assets/Icons/subtitle.png',
       scale: 2,
+      color: darkThemeValue ? Colors.white : Colors.black,
     );
   }
 }
@@ -192,6 +204,7 @@ class PauseIcon extends StatelessWidget {
     return Image.asset(
       'assets/Icons/pause_icon.png',
       scale: 1.7,
+      color: darkThemeValue ? Colors.white : Colors.black,
     );
   }
 }
@@ -206,6 +219,7 @@ class PlayIcon extends StatelessWidget {
     return Image.asset(
       'assets/Icons/play.png',
       scale: 1.7,
+      color: darkThemeValue ? Colors.white : Colors.black,
     );
   }
 }
@@ -220,6 +234,7 @@ class CloseIcon extends StatelessWidget {
     return Image.asset(
       'assets/Icons/close.png',
       scale: 1.33,
+      color: darkThemeValue ? Colors.white : Colors.black,
     );
   }
 }
@@ -234,6 +249,7 @@ class RewindIcon extends StatelessWidget {
     return Image.asset(
       'assets/Icons/rewind.png',
       scale: 3,
+      color: darkThemeValue ? Colors.white : Colors.black,
     );
   }
 }
@@ -248,6 +264,7 @@ class ForwardIcon extends StatelessWidget {
     return Image.asset(
       'assets/Icons/forward.png',
       scale: 3,
+      color: darkThemeValue ? Colors.white : Colors.black,
     );
   }
 }
@@ -265,12 +282,14 @@ class LikeIcon extends StatelessWidget {
         return Image.asset(
           'assets/Icons/like_filled.png',
           scale: 3,
+          color: darkThemeValue ? Colors.white : Colors.black,
         );
 
       default:
         return Image.asset(
           'assets/Icons/like.png',
           scale: 3,
+          color: darkThemeValue ? Colors.white : Colors.black,
         );
     }
   }
@@ -289,12 +308,14 @@ class DislikeIcon extends StatelessWidget {
         return Image.asset(
           'assets/Icons/dislike_filled.png',
           scale: 3,
+          color: darkThemeValue ? Colors.white : Colors.black,
         );
 
       default:
         return Image.asset(
           'assets/Icons/dislike.png',
           scale: 3,
+          color: darkThemeValue ? Colors.white : Colors.black,
         );
     }
   }
@@ -310,6 +331,7 @@ class ShareIcon extends StatelessWidget {
     return Image.asset(
       'assets/Icons/share.png',
       scale: 3,
+      color: darkThemeValue ? Colors.white : Colors.black,
     );
   }
 }
@@ -324,6 +346,7 @@ class DownloadIcon extends StatelessWidget {
     return Image.asset(
       'assets/Icons/download.png',
       scale: 3,
+      color: darkThemeValue ? Colors.white : Colors.black,
     );
   }
 }
@@ -338,6 +361,7 @@ class SaveIcon extends StatelessWidget {
     return Image.asset(
       'assets/Icons/save.png',
       scale: 3,
+      color: darkThemeValue ? Colors.white : Colors.black,
     );
   }
 }

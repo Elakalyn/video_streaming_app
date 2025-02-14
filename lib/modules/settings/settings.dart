@@ -99,9 +99,37 @@ class AccountSettings extends StatelessWidget {
                 style: TextStyles.previousSearch,
               ),
               onTap: () {
-                // Implement an are you sure function before the logout account function
-                cubit.logout();
-                context.goNamed('login');
+                showDialog<void>(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: const Text(
+                          'Are you sure you want to log out of your account?'),
+                      actions: <Widget>[
+                        TextButton(
+                          style: TextButton.styleFrom(
+                            textStyle: Theme.of(context).textTheme.labelLarge,
+                          ),
+                          child: const Text('Yes'),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                            cubit.logout();
+                            context.goNamed('login');
+                          },
+                        ),
+                        TextButton(
+                          style: TextButton.styleFrom(
+                            textStyle: Theme.of(context).textTheme.labelLarge,
+                          ),
+                          child: const Text('No'),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                );
               },
             ),
             ListTile(
@@ -110,7 +138,6 @@ class AccountSettings extends StatelessWidget {
                 style: TextStyles.previousSearch,
               ),
               onTap: () {
-                // Implement an are you sure function before the delete account function
                 showDialog<void>(
                   context: context,
                   builder: (BuildContext context) {
@@ -128,7 +155,7 @@ class AccountSettings extends StatelessWidget {
                           child: const Text('Yes'),
                           onPressed: () {
                             Navigator.of(context).pop();
-                             cubit.deleteAccount();
+                            cubit.deleteAccount();
                             context.goNamed('login');
                           },
                         ),

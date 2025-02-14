@@ -7,6 +7,8 @@ import 'package:video_streaming_app/modules/layout/cubit/layout_cubit.dart';
 import 'package:video_streaming_app/modules/video/cubit/video_interactions_cubit.dart';
 import 'package:video_streaming_app/shared/components/icons.dart';
 import 'package:pod_player/pod_player.dart';
+import 'package:video_streaming_app/shared/constants/constants.dart';
+import 'package:video_streaming_app/shared/styles/textStyles.dart';
 
 class VideoInteractions extends StatelessWidget {
   const VideoInteractions({
@@ -31,7 +33,6 @@ class VideoInteractions extends StatelessWidget {
     return BlocConsumer<VideoInteractionsCubit, VideoInteractionsState>(
       listener: (context, state) {
         print(state);
-        print(ucubit.dislikedVideos);
         if (ucubit.likedVideos
             .contains(lcubit.currentVideoDetails['videoID'])) {
           isLiked = true;
@@ -40,11 +41,13 @@ class VideoInteractions extends StatelessWidget {
             .contains(lcubit.currentVideoDetails['videoID'])) {
           isDisliked = true;
           isLiked = false;
+        } else {
+          isDisliked = false;
+          isLiked = false;
         }
       },
       builder: (context, state) {
         return Container(
-          color: HexColor('0F0F0F'),
           child: Padding(
             padding: const EdgeInsets.only(
                 bottom: 12.0, left: 12, right: 12, top: 12),
@@ -53,11 +56,7 @@ class VideoInteractions extends StatelessWidget {
               children: [
                 Text(
                   LayoutCubit.get(context).currentVideoDetails['title'],
-                  style: TextStyle(
-                    fontSize: 18,
-                    height: 1.3,
-                    color: Colors.white,
-                  ),
+                  style: TextStyles.videoScreenTitle,
                 ),
                 7.h,
                 Row(
@@ -89,11 +88,7 @@ class VideoInteractions extends StatelessWidget {
                       12.w,
                       Text(
                         '${lcubit.currentVideoDetails['uploader']}',
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w500,
-                        ),
+                        style: TextStyles.videoScreenUploader,
                       ),
                       8.w,
                       Text(
@@ -110,7 +105,7 @@ class VideoInteractions extends StatelessWidget {
                           width: 80,
                           height: 30,
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color:darkThemeValue ? Colors.white : Colors.black,
                             borderRadius: BorderRadius.circular(16),
                           ),
                           child: Padding(
@@ -119,7 +114,7 @@ class VideoInteractions extends StatelessWidget {
                             child: Text(
                               'Subscribe',
                               style: TextStyle(
-                                color: Colors.black,
+                                color: darkThemeValue ? Colors.black : Colors.white,
                                 fontSize: 12,
                                 fontWeight: FontWeight.w500,
                               ),
@@ -135,9 +130,11 @@ class VideoInteractions extends StatelessWidget {
                   child: Row(
                     children: [
                       Container(
-                        width: 108,
+                       
                         decoration: BoxDecoration(
-                          color: HexColor("1A1A1A"),
+                          color: darkThemeValue
+                              ? HexColor("1A1A1A")
+                              : HexColor("F2F2F2"),
                           borderRadius: BorderRadius.circular(32),
                         ),
                         child: Padding(
@@ -158,9 +155,6 @@ class VideoInteractions extends StatelessWidget {
                               8.w,
                               Text(
                                 lcubit.currentVideoDetails['likes'].toString(),
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
                               ),
                               8.w,
                               Container(
@@ -172,7 +166,8 @@ class VideoInteractions extends StatelessWidget {
                               GestureDetector(
                                   onTap: () {
                                     cubit.dislikeVideo(
-                                        lcubit.currentVideoDetails['videoID'],context);
+                                        lcubit.currentVideoDetails['videoID'],
+                                        context);
                                   },
                                   child: DislikeIcon(
                                     disliked: isDisliked,
@@ -185,7 +180,9 @@ class VideoInteractions extends StatelessWidget {
                       Container(
                         width: 81,
                         decoration: BoxDecoration(
-                          color: HexColor("1A1A1A"),
+                          color: darkThemeValue
+                              ? HexColor("1A1A1A")
+                              : HexColor("F2F2F2"),
                           borderRadius: BorderRadius.circular(32),
                         ),
                         child: Padding(
@@ -197,9 +194,6 @@ class VideoInteractions extends StatelessWidget {
                               4.w,
                               Text(
                                 'Share',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
                               ),
                             ],
                           ),
@@ -209,7 +203,9 @@ class VideoInteractions extends StatelessWidget {
                       Container(
                         width: 109,
                         decoration: BoxDecoration(
-                          color: HexColor("1A1A1A"),
+                          color: darkThemeValue
+                              ? HexColor("1A1A1A")
+                              : HexColor("F2F2F2"),
                           borderRadius: BorderRadius.circular(32),
                         ),
                         child: Padding(
@@ -221,9 +217,6 @@ class VideoInteractions extends StatelessWidget {
                               4.w,
                               Text(
                                 'Download',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
                               ),
                             ],
                           ),
@@ -233,7 +226,9 @@ class VideoInteractions extends StatelessWidget {
                       Container(
                         width: 75,
                         decoration: BoxDecoration(
-                          color: HexColor("1A1A1A"),
+                          color: darkThemeValue
+                              ? HexColor("1A1A1A")
+                              : HexColor("F2F2F2"),
                           borderRadius: BorderRadius.circular(32),
                         ),
                         child: Padding(
@@ -245,9 +240,6 @@ class VideoInteractions extends StatelessWidget {
                               4.w,
                               Text(
                                 'Save',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
                               ),
                             ],
                           ),
@@ -259,7 +251,9 @@ class VideoInteractions extends StatelessWidget {
                 16.h,
                 Container(
                   decoration: BoxDecoration(
-                    color: HexColor("1A1A1A"),
+                    color: darkThemeValue
+                        ? HexColor("1A1A1A")
+                        : HexColor("F2F2F2"),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   width: 351,
@@ -273,9 +267,7 @@ class VideoInteractions extends StatelessWidget {
                           children: [
                             Text(
                               'Comments',
-                              style: TextStyle(
-                                color: Colors.white,
-                              ),
+                            
                             ),
                             4.w,
                             Text(
@@ -297,11 +289,7 @@ class VideoInteractions extends StatelessWidget {
                               width: 268 - 21,
                               child: Text(
                                 'Will AI ing',
-                                style: TextStyle(
-                                  overflow: TextOverflow.ellipsis,
-                                  color: Colors.white,
-                                  fontSize: 12,
-                                ),
+                                style: TextStyles.commentsPreview,
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 2,
                               ),

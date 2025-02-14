@@ -13,9 +13,9 @@ class VideoInteractionsCubit extends Cubit<VideoInteractionsState> {
   static VideoInteractionsCubit get(context) => BlocProvider.of(context);
   Future<void> likeVideo(videoID, context) async {
     // Switch any previous dislike to a like if one was made
+    List x = [videoID];
+    List y = [uid];
     if (UserCubit.get(context).dislikedVideos.contains(videoID)) {
-      List x = [videoID];
-      List y = [uid];
       FirebaseFirestore.instance.collection('users').doc(uid).update({
         'disliked_videos': FieldValue.arrayRemove(x),
       });
@@ -30,6 +30,17 @@ class VideoInteractionsCubit extends Cubit<VideoInteractionsState> {
     FirebaseFirestore.instance.collection('users').doc(uid).update({
       'liked_videos': FieldValue.arrayUnion([videoID])
     });
+    // Toggle Like
+    if (UserCubit.get(context).likedVideos.contains(videoID)) {
+      // Cancel like from user's document
+      FirebaseFirestore.instance.collection('users').doc(uid).update({
+        'liked_videos': FieldValue.arrayRemove(x),
+      });
+      // Cancel like from video document
+      FirebaseFirestore.instance.collection('videos').doc(videoID).update({
+        'likes': FieldValue.arrayRemove(y),
+      });
+    }
 
     // Update number of likes
     var updatedLikes;
@@ -50,9 +61,9 @@ class VideoInteractionsCubit extends Cubit<VideoInteractionsState> {
 
   Future<void> dislikeVideo(videoID, context) async {
     // Switch any previous like to a dislike if one was made
+    List x = [videoID];
+    List y = [uid];
     if (UserCubit.get(context).likedVideos.contains(videoID)) {
-      List x = [videoID];
-      List y = [uid];
       FirebaseFirestore.instance.collection('users').doc(uid).update({
         'liked_videos': FieldValue.arrayRemove(x),
       });
@@ -61,12 +72,23 @@ class VideoInteractionsCubit extends Cubit<VideoInteractionsState> {
       });
     }
     // Update dislike status
-    await FirebaseFirestore.instance.collection('videos').doc(videoID).update({
+    FirebaseFirestore.instance.collection('videos').doc(videoID).update({
       'dislikes': FieldValue.arrayUnion([uid])
     });
-    await FirebaseFirestore.instance.collection('users').doc(uid).update({
+    FirebaseFirestore.instance.collection('users').doc(uid).update({
       'disliked_videos': FieldValue.arrayUnion([videoID])
     });
+    // Toggle Dislike
+    if (UserCubit.get(context).dislikedVideos.contains(videoID)) {
+      // Cancel dislike from user's document
+      FirebaseFirestore.instance.collection('users').doc(uid).update({
+        'disliked_videos': FieldValue.arrayRemove(x),
+      });
+      // Cancel dislike from video document
+      FirebaseFirestore.instance.collection('videos').doc(videoID).update({
+        'dislikes': FieldValue.arrayRemove(y),
+      });
+    }
     // Update number of likes
     var updatedLikes;
     await FirebaseFirestore.instance

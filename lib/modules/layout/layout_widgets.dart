@@ -4,6 +4,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:speed_up_flutter/speed_up_flutter.dart';
 import 'package:video_streaming_app/modules/layout/cubit/layout_cubit.dart';
 import 'package:video_streaming_app/shared/components/icons.dart';
+import 'package:video_streaming_app/shared/constants/constants.dart';
 import 'package:video_streaming_app/shared/styles/textStyles.dart';
 
 class NavBar extends StatelessWidget {
@@ -13,6 +14,7 @@ class NavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return NavigationBar(
+   
       destinations: [
         NavigationDestination(
           icon: HomeIcon(),
@@ -47,7 +49,7 @@ class Miniplayer extends StatelessWidget {
         return Container(
           height: 54,
           width: 360,
-          color: HexColor('0F0F0F'),
+          color: darkThemeValue ? Colors.black : Colors.white, 
           child: Stack(
             children: [
               Row(
