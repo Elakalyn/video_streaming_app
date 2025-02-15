@@ -13,14 +13,13 @@ class VideoInteractionsCubit extends Cubit<VideoInteractionsState> {
   static VideoInteractionsCubit get(context) => BlocProvider.of(context);
   Future<void> likeVideo(videoID, context) async {
     // Switch any previous dislike to a like if one was made
-    List x = [videoID];
-    List y = [uid];
+
     if (UserCubit.get(context).dislikedVideos.contains(videoID)) {
       FirebaseFirestore.instance.collection('users').doc(uid).update({
-        'disliked_videos': FieldValue.arrayRemove(x),
+        'disliked_videos': FieldValue.arrayRemove([videoID]),
       });
       FirebaseFirestore.instance.collection('videos').doc(videoID).update({
-        'dislikes': FieldValue.arrayRemove(y),
+        'dislikes': FieldValue.arrayRemove([uid]),
       });
     }
     // Update like status
@@ -34,11 +33,11 @@ class VideoInteractionsCubit extends Cubit<VideoInteractionsState> {
     if (UserCubit.get(context).likedVideos.contains(videoID)) {
       // Cancel like from user's document
       FirebaseFirestore.instance.collection('users').doc(uid).update({
-        'liked_videos': FieldValue.arrayRemove(x),
+        'liked_videos': FieldValue.arrayRemove([videoID]),
       });
       // Cancel like from video document
       FirebaseFirestore.instance.collection('videos').doc(videoID).update({
-        'likes': FieldValue.arrayRemove(y),
+        'likes': FieldValue.arrayRemove([uid]),
       });
     }
 
@@ -61,14 +60,13 @@ class VideoInteractionsCubit extends Cubit<VideoInteractionsState> {
 
   Future<void> dislikeVideo(videoID, context) async {
     // Switch any previous like to a dislike if one was made
-    List x = [videoID];
-    List y = [uid];
+
     if (UserCubit.get(context).likedVideos.contains(videoID)) {
       FirebaseFirestore.instance.collection('users').doc(uid).update({
-        'liked_videos': FieldValue.arrayRemove(x),
+        'liked_videos': FieldValue.arrayRemove([videoID]),
       });
       FirebaseFirestore.instance.collection('videos').doc(videoID).update({
-        'likes': FieldValue.arrayRemove(y),
+        'likes': FieldValue.arrayRemove([uid]),
       });
     }
     // Update dislike status
@@ -82,11 +80,11 @@ class VideoInteractionsCubit extends Cubit<VideoInteractionsState> {
     if (UserCubit.get(context).dislikedVideos.contains(videoID)) {
       // Cancel dislike from user's document
       FirebaseFirestore.instance.collection('users').doc(uid).update({
-        'disliked_videos': FieldValue.arrayRemove(x),
+        'disliked_videos': FieldValue.arrayRemove([videoID]),
       });
       // Cancel dislike from video document
       FirebaseFirestore.instance.collection('videos').doc(videoID).update({
-        'dislikes': FieldValue.arrayRemove(y),
+        'dislikes': FieldValue.arrayRemove([uid]),
       });
     }
     // Update number of likes
@@ -104,5 +102,15 @@ class VideoInteractionsCubit extends Cubit<VideoInteractionsState> {
           .addAll({'likes': updatedLikes.length});
     });
     emit(EngageVideoState());
+  }
+
+  void viewVideo({required videoID}) {
+    FirebaseFirestore.instance.collection('videos').doc(videoID).update({
+      'views': FieldValue.arrayUnion([uid])
+    }); // Add view to video document
+
+    FirebaseFirestore.instance.collection('users').doc(uid).update({
+      'watched_videos': FieldValue.arrayUnion([videoID])
+    });
   }
 }

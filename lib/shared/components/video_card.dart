@@ -4,6 +4,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:speed_up_flutter/speed_up_flutter.dart';
 import 'package:video_streaming_app/modules/home/cubit/home_cubit.dart';
 import 'package:video_streaming_app/modules/layout/cubit/layout_cubit.dart';
+import 'package:video_streaming_app/modules/video/cubit/video_interactions_cubit.dart';
 import 'package:video_streaming_app/shared/styles/textStyles.dart';
 
 class VideoCard extends StatelessWidget {
@@ -49,13 +50,13 @@ class VideoCard extends StatelessWidget {
           'videoID': videoID,
         });
         context.go('/video');
+        VideoInteractionsCubit.get(context).viewVideo(videoID: videoID);
       },
       child: Container(
         height: 313,
         child: Column(
           children: [
             Container(
-           
               height: 210,
               child: Stack(
                 children: [
@@ -86,7 +87,6 @@ class VideoCard extends StatelessWidget {
               ),
             ),
             Container(
-        
               width: double.maxFinite,
               height: 103,
               child: Padding(
@@ -138,7 +138,6 @@ class mockVideoCard extends StatelessWidget {
         child: Column(
           children: [
             Container(
-           
               height: 210,
               child: Stack(
                 children: [
@@ -169,7 +168,6 @@ class mockVideoCard extends StatelessWidget {
               ),
             ),
             Container(
-          
               width: double.maxFinite,
               height: 103,
               child: Padding(
@@ -221,7 +219,6 @@ class SkeletonVideoCard extends StatelessWidget {
         child: Column(
           children: [
             Container(
-         
               height: 210,
               child: Stack(
                 children: [
@@ -246,7 +243,6 @@ class SkeletonVideoCard extends StatelessWidget {
               ),
             ),
             Container(
-            
               width: double.maxFinite,
               height: 103,
               child: Padding(

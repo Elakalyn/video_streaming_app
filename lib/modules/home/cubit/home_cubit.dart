@@ -81,7 +81,7 @@ class HomeCubit extends Cubit<HomeState> {
               duration: document['duration'],
               thumbnail: document['thumbnail'],
               uploader: document['uploader'],
-              views: document['views'],
+              views: document['views'].length,
               video_host: document['video_host'],
               likes: document['likes'].length,
               videoID: document.id,
