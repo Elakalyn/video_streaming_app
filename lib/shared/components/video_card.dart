@@ -35,22 +35,43 @@ class VideoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     date = HomeCubit.get(context).getTimeSinceDate(date);
+    var currentVideoDetails = LayoutCubit.get(context).currentVideoDetails;
     return GestureDetector(
-      onTap: () {
-        LayoutCubit.get(context).currentVideoDetails.addAll({
-          'title': title,
-          'thumbnail': thumbnail,
-          'duration': duration,
-          'date': date,
-          'views': views,
-          'uploader': uploader,
-          'uploaderPfp': uploaderPfp,
-          'likes': likes,
-          'video_host': video_host,
-          'videoID': videoID,
-        });
-        context.go('/video');
-        VideoInteractionsCubit.get(context).viewVideo(videoID: videoID);
+      onTap: () async {
+        if (currentVideoDetails.isNotEmpty) {
+          currentVideoDetails.clear();
+          currentVideoDetails.addAll({
+            'title': title,
+            'thumbnail': thumbnail,
+            'duration': duration,
+            'date': date,
+            'views': views,
+            'uploader': uploader,
+            'uploaderPfp': uploaderPfp,
+            'likes': likes,
+            'video_host': video_host,
+            'videoID': videoID,
+          });
+          context.go('/');
+          await Future.delayed(Duration(milliseconds: 1)).whenComplete(() {
+            context.go('/video');
+          });
+        } else {
+          currentVideoDetails.addAll({
+            'title': title,
+            'thumbnail': thumbnail,
+            'duration': duration,
+            'date': date,
+            'views': views,
+            'uploader': uploader,
+            'uploaderPfp': uploaderPfp,
+            'likes': likes,
+            'video_host': video_host,
+            'videoID': videoID,
+          });
+          context.go('/video');
+          VideoInteractionsCubit.get(context).viewVideo(videoID: videoID);
+        }
       },
       child: Container(
         height: 313,

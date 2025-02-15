@@ -1,9 +1,11 @@
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:video_streaming_app/modules/auth/cubit/user_cubit.dart';
 import 'package:video_streaming_app/modules/layout/cubit/layout_cubit.dart';
+import 'package:video_streaming_app/shared/components/video_card.dart';
 import 'package:video_streaming_app/shared/constants/constants.dart';
 
 part 'video_interactions_state.dart';
@@ -112,5 +114,61 @@ class VideoInteractionsCubit extends Cubit<VideoInteractionsState> {
     FirebaseFirestore.instance.collection('users').doc(uid).update({
       'watched_videos': FieldValue.arrayUnion([videoID])
     });
+  }
+
+  fetchSuggestions({required String videoID}) {
+    return FutureBuilder<QuerySnapshot>(
+      future: FirebaseFirestore.instance.collection('videos').get(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        }
+
+        if (snapshot.hasError) {
+          return Center(
+              child: Text('Error fetching videos: ${snapshot.error}'));
+        }
+
+        final querySnapshot = snapshot.data;
+        if (querySnapshot == null || querySnapshot.docs.isEmpty) {
+          return Center(child: Text('No videos available'));
+        }
+
+        List<Map<String, dynamic>> videos = querySnapshot.docs
+            .where((doc) => doc.id != videoID) // Exclude the current video
+            .map((doc) => {
+                  'title': doc['title'],
+                  'date': doc['date'],
+                  'duration': doc['duration'],
+                  'thumbnail': doc['thumbnail'],
+                  'uploader': doc['uploader'],
+                  'views': doc['views'].length,
+                  'video_host': doc['video_host'],
+                  'likes': doc['likes'].length,
+                  'videoID': doc.id,
+                })
+            .toList();
+
+        return ListView.builder(
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          itemCount: videos.length,
+          itemBuilder: (context, index) {
+            final video = videos[index];
+            return VideoCard(
+              title: video['title'],
+              date: video['date'],
+              duration: video['duration'],
+              thumbnail: video['thumbnail'],
+              uploader: video['uploader'],
+              views: video['views'],
+              video_host: video['video_host'],
+              likes: video['likes'],
+              videoID: video['videoID'],
+            );
+          },
+        );
+      },
+    );
   }
 }

@@ -39,7 +39,8 @@ class LayoutCubit extends Cubit<LayoutState> {
     emit(BNBChangeState());
   }
 
-  Map currentVideoDetails = {'': ''};
+  Map currentVideoDetails = {};
+
 
   // Mini-Player
 

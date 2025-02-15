@@ -105,7 +105,8 @@ class VideoInteractions extends StatelessWidget {
                           width: 80,
                           height: 30,
                           decoration: BoxDecoration(
-                            color:darkThemeValue! ? Colors.white : Colors.black,
+                            color:
+                                darkThemeValue! ? Colors.white : Colors.black,
                             borderRadius: BorderRadius.circular(16),
                           ),
                           child: Padding(
@@ -114,7 +115,9 @@ class VideoInteractions extends StatelessWidget {
                             child: Text(
                               'Subscribe',
                               style: TextStyle(
-                                color: darkThemeValue! ? Colors.black : Colors.white,
+                                color: darkThemeValue!
+                                    ? Colors.black
+                                    : Colors.white,
                                 fontSize: 12,
                                 fontWeight: FontWeight.w500,
                               ),
@@ -266,7 +269,6 @@ class VideoInteractions extends StatelessWidget {
                           children: [
                             Text(
                               'Comments',
-                            
                             ),
                             4.w,
                             Text(

@@ -3,15 +3,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:speed_up_flutter/speed_up_flutter.dart';
+import 'package:video_streaming_app/modules/home/cubit/home_cubit.dart';
 import 'package:video_streaming_app/modules/home/home_widgets.dart';
+import 'package:video_streaming_app/modules/video/cubit/video_interactions_cubit.dart';
 import 'package:video_streaming_app/modules/video/video_widgets.dart';
 import 'package:video_streaming_app/shared/components/icons.dart';
 import 'package:video_streaming_app/shared/components/myDivider.dart';
 import 'package:video_streaming_app/shared/components/video_card.dart';
 
 import '../layout/cubit/layout_cubit.dart';
-
-
 
 class VideoScreen extends StatelessWidget {
   const VideoScreen({
@@ -24,9 +24,7 @@ class VideoScreen extends StatelessWidget {
     bool isLiked;
     bool isDisliked;
     return BlocConsumer<LayoutCubit, LayoutState>(
-      listener: (context, state) {
-        
-      },
+      listener: (context, state) {},
       builder: (context, state) {
         return Scaffold(
           body: SingleChildScrollView(
@@ -72,7 +70,8 @@ class VideoScreen extends StatelessWidget {
                     ],
                   ),
                   VideoInteractions(),
-                  mockVideoCard()
+                  VideoInteractionsCubit.get(context).fetchSuggestions(
+                      videoID: cubit.currentVideoDetails['videoID']),
                 ],
               ),
             ),

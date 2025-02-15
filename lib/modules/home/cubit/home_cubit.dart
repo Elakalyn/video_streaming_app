@@ -36,7 +36,7 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
-  fetchVideos() {
+  fetchVideos({videoID}) {
     return StreamBuilder<QuerySnapshot>(
       stream: videos.snapshots(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -74,18 +74,19 @@ class HomeCubit extends Cubit<HomeState> {
           itemBuilder: (context, index) {
             final DocumentSnapshot<Object?> document =
                 querySnapshot.docs[index];
-
-            return VideoCard(
-              title: document['title'],
-              date: document['date'],
-              duration: document['duration'],
-              thumbnail: document['thumbnail'],
-              uploader: document['uploader'],
-              views: document['views'].length,
-              video_host: document['video_host'],
-              likes: document['likes'].length,
-              videoID: document.id,
-            );
+            if (videoID != document.id) {
+              return VideoCard(
+                title: document['title'],
+                date: document['date'],
+                duration: document['duration'],
+                thumbnail: document['thumbnail'],
+                uploader: document['uploader'],
+                views: document['views'].length,
+                video_host: document['video_host'],
+                likes: document['likes'].length,
+                videoID: document.id,
+              );
+            }
           },
           itemCount: querySnapshot.docs.length,
         );
