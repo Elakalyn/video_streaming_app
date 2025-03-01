@@ -1,3 +1,6 @@
+// ignore_for_file: must_be_immutable
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -22,6 +25,7 @@ class VideoInteractions extends StatelessWidget {
     var lcubit = LayoutCubit.get(context);
     bool isLiked = false;
     bool isDisliked = false;
+    var commentController = TextEditingController();
     if (ucubit.likedVideos.contains(lcubit.currentVideoDetails['videoID'])) {
       isLiked = true;
       isDisliked = false;
@@ -47,6 +51,7 @@ class VideoInteractions extends StatelessWidget {
         }
       },
       builder: (context, state) {
+        cubit.getFirstComment(context);
         return Container(
           child: Padding(
             padding: const EdgeInsets.only(
@@ -252,54 +257,190 @@ class VideoInteractions extends StatelessWidget {
                 ),
                 16.h,
                 Container(
+                  width: 351,
+                  height: 83,
                   decoration: BoxDecoration(
                     color: darkThemeValue!
                         ? HexColor("1A1A1A")
                         : HexColor("F2F2F2"),
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  width: 351,
-                  height: 83,
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Comments',
-                            ),
-                            4.w,
-                            Text(
-                              '18',
-                              style: TextStyle(
-                                color: HexColor('8C8C8C'),
+                  child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(12),
+                      onTap: () {
+                        showBottomSheet(
+                          context: context,
+                          builder: (context) {
+                            return Container(
+                              width: 360,
+                              height: 800 - 270,
+                              decoration: BoxDecoration(
+                                color: HexColor('212121'),
+                                borderRadius: BorderRadius.vertical(
+                                    top: Radius.circular(12)),
                               ),
+                              child: Stack(
+                                children: [
+                                  Column(
+                                    children: [
+                                      8.h,
+                                      Container(
+                                        width: 40,
+                                        height: 4,
+                                        decoration: BoxDecoration(
+                                          color: HexColor('606060'),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(6)),
+                                        ),
+                                      ),
+                                      10.h,
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 16.0),
+                                        child: Row(
+                                          children: [
+                                            Text(
+                                              'Comments',
+                                              style: TextStyles.header,
+                                            ),
+                                            8.w,
+                                            Text(
+                                              '0',
+                                              style: TextStyle(
+                                                color: HexColor('909090'),
+                                                fontSize: 16,
+                                              ),
+                                            ),
+                                            Spacer(),
+                                            IconButton(
+                                                onPressed: () {
+                                                  // TODO: Add sorting options
+                                                },
+                                                icon: AdjustIcon()),
+                                            IconButton(
+                                                icon: CloseIcon(),
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                }),
+                                          ],
+                                        ),
+                                      ),
+                                      8.h,
+                                      Container(
+                                        width: 360,
+                                        height: 1,
+                                        decoration: BoxDecoration(
+                                          color: HexColor('606060'),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(6)),
+                                        ),
+                                      ),
+                                      8.h,
+                                      cubit.fetchComments(
+                                          videoID: lcubit
+                                              .currentVideoDetails['videoID'])
+                                    ],
+                                  ),
+                                  Positioned(
+                                    bottom: 0,
+                                    child: Container(
+                                      height: 52,
+                                      width: 360,
+                                      color: HexColor('0F0F0F'),
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 12, vertical: 6.0),
+                                        child: Row(
+                                          children: [
+                                            CircleAvatar(
+                                              radius: 12,
+                                            ),
+                                            10.w,
+                                            Expanded(
+                                                child: TextFormField(
+                                              controller: commentController,
+                                              onChanged: (v) =>
+                                                  cubit.updateComment(),
+                                              decoration: InputDecoration(
+                                                hintText: 'Add a comment...',
+                                                hintStyle: TextStyle(
+                                                    color: Colors.grey,
+                                                    fontSize: 14),
+                                                fillColor: HexColor('272727'),
+                                                filled: true,
+                                                border: OutlineInputBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            4),
+                                                    borderSide:
+                                                        BorderSide.none),
+                                              ),
+                                            )),
+                                            10.w,
+                                            sendIcon(
+                                                commentController:
+                                                    commentController)
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            );
+                          },
+                        );
+                      },
+                      splashColor: Colors.grey.withOpacity(0.3),
+                      highlightColor: Colors.grey.withOpacity(0.1),
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text('Comments'),
+                                SizedBox(width: 4),
+                                Text(
+                                  '18',
+                                  style: TextStyle(
+                                    color: HexColor('8C8C8C'),
+                                  ),
+                                ),
+                              ],
                             ),
+                            SizedBox(height: 4),
+                            Row(
+                              children: [
+                                CircleAvatar(radius: 12),
+                                SizedBox(width: 7),
+                                SizedBox(
+                                  width: 268 - 21,
+                                  child: cubit.featuredComment == null
+                                      ? Center(
+                                          child: SizedBox(
+                                            width: 20,
+                                            height: 20,
+                                            child: CircularProgressIndicator(
+                                                strokeWidth: 2),
+                                          ),
+                                        )
+                                      : Text(
+                                          cubit.featuredComment!,
+                                          style: TextStyles.commentsPreview,
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 2,
+                                        ),
+                                ),
+                                SizedBox(width: 18),
+                              ],
+                            )
                           ],
                         ),
-                        4.h,
-                        Row(
-                          children: [
-                            CircleAvatar(
-                              radius: 12,
-                            ),
-                            7.w,
-                            SizedBox(
-                              width: 268 - 21,
-                              child: Text(
-                                'Will AI ing',
-                                style: TextStyles.commentsPreview,
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 2,
-                              ),
-                            ),
-                            18.w,
-                            DownIcon()
-                          ],
-                        )
-                      ],
+                      ),
                     ),
                   ),
                 ),
@@ -309,6 +450,112 @@ class VideoInteractions extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+}
+
+class sendIcon extends StatelessWidget {
+  const sendIcon({
+    super.key,
+    required this.commentController,
+  });
+
+  final TextEditingController commentController;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocConsumer<VideoInteractionsCubit, VideoInteractionsState>(
+      listener: (context, state) {
+        // TODO: implement listener
+      },
+      builder: (context, state) {
+        return IconButton(
+            disabledColor: Colors.grey[800],
+            onPressed: commentController.text.isEmpty
+                ? null
+                : () => VideoInteractionsCubit.get(context).postComment(
+                      comment_data: commentController.text,
+                      date: 'a week ago',
+                      user_uid: uid,
+                      controller: commentController,
+                    ),
+            icon: state is PostCommentLoadingState
+                ? CircularProgressIndicator()
+                : Icon(Icons.send));
+      },
+    );
+  }
+}
+
+class commentBuilder extends StatelessWidget {
+  const commentBuilder({
+    super.key,
+    required this.comment_data,
+    required this.date,
+    required this.user_uid,
+    required this.commentID,
+  });
+
+  final comment_data;
+  final date;
+  final user_uid;
+  final commentID;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onLongPress: () {
+          if (user_uid == uid) {
+            showModalBottomSheet(
+              context: context,
+              builder: (context) {
+                return InkWell(
+                    borderRadius:
+                        BorderRadius.vertical(top: Radius.circular(28)),
+                    onTap: () {
+                      VideoInteractionsCubit.get(context).deleteComment(
+                          commentID: commentID, context: context);
+                      Navigator.pop(context);
+                    },
+                    child: ListTile(
+                      title: Text('Delete comment'),
+                    ));
+              },
+            );
+          }
+        },
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              CircleAvatar(
+                radius: 12,
+              ),
+              10.w,
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '${user_uid} • ${date}',
+                      style: TextStyles.videoDetails,
+                    ),
+                    4.h,
+                    Text(
+                      '$comment_data',
+                    ),
+                    16.h,
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

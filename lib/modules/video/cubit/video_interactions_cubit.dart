@@ -3,15 +3,18 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 import 'package:video_streaming_app/modules/auth/cubit/user_cubit.dart';
 import 'package:video_streaming_app/modules/layout/cubit/layout_cubit.dart';
+import 'package:video_streaming_app/modules/video/video_widgets.dart';
 import 'package:video_streaming_app/shared/components/video_card.dart';
 import 'package:video_streaming_app/shared/constants/constants.dart';
 
 part 'video_interactions_state.dart';
 
 class VideoInteractionsCubit extends Cubit<VideoInteractionsState> {
-  VideoInteractionsCubit() : super(VideoInteractionsInitial());
+  VideoInteractionsCubit(this.layoutCubit) : super(VideoInteractionsInitial());
+  final LayoutCubit layoutCubit;
   static VideoInteractionsCubit get(context) => BlocProvider.of(context);
   Future<void> likeVideo(videoID, context) async {
     // Switch any previous dislike to a like if one was made
@@ -170,5 +173,121 @@ class VideoInteractionsCubit extends Cubit<VideoInteractionsState> {
         );
       },
     );
+  }
+
+  var featuredComment;
+  getFirstComment(context) async {
+    var x = await FirebaseFirestore.instance
+        .collection('videos')
+        .doc(layoutCubit.currentVideoDetails['videoID'])
+        .collection('comments')
+        .limit(1)
+        .get();
+    if (x.docs.isNotEmpty) {
+      featuredComment = x.docs.first['comment_data'];
+    } else {
+      featuredComment = 'No comments yet.';
+    }
+
+    emit(state);
+  }
+
+  void updateComment() {
+    emit(UserCommentUpdateState());
+  }
+
+  fetchComments({videoID}) {
+    CollectionReference comments = FirebaseFirestore.instance
+        .collection('videos')
+        .doc(videoID)
+        .collection('comments');
+    return StreamBuilder<QuerySnapshot>(
+      stream: comments.snapshots(),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        final QuerySnapshot? querySnapshot = snapshot.data;
+
+        if (snapshot.hasError) {
+          emit(FetchCommentsErrorState());
+
+          return Text('Error: ${snapshot.error}');
+        }
+
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          emit(FetchCommentsLoadingState());
+          return CircularProgressIndicator();
+        }
+
+        if (querySnapshot == null) {
+          emit(FetchCommentsErrorState());
+          return const Text(
+            'No data available',
+          );
+        }
+        emit(FetchCommentsSuccessState());
+        return ListView.builder(
+          shrinkWrap: true,
+          itemBuilder: (context, index) {
+            final DocumentSnapshot<Object?> document =
+                querySnapshot.docs[index];
+
+            return commentBuilder(
+              comment_data: document['comment_data'],
+              date: document['date'],
+              user_uid: document['user_uid'],
+              commentID: document.id,
+            );
+          },
+          itemCount: querySnapshot.docs.length,
+        );
+      },
+    );
+  }
+
+  postComment(
+      {required dynamic comment_data,
+      required dynamic date,
+      required dynamic user_uid,
+      required TextEditingController controller,
+      context}) {
+    controller.clear();
+    emit(PostCommentLoadingState());
+    FirebaseFirestore.instance
+        .collection('videos')
+        .doc(layoutCubit.currentVideoDetails['videoID'])
+        .collection('comments')
+        .add({
+      'comment_data': comment_data,
+      'date': date,
+      'user_uid': user_uid,
+    }).catchError((e) {
+      emit(PostCommentErrorState());
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(e.toString()),
+          duration: Duration(seconds: 2),
+        ),
+      );
+      return e;
+    }).whenComplete(() {
+      emit(PostCommentSuccessState());
+    });
+  }
+
+  deleteComment({required commentID, required context}) {
+    FirebaseFirestore.instance
+        .collection('videos')
+        .doc(layoutCubit.currentVideoDetails['videoID'])
+        .collection('comments')
+        .doc(commentID)
+        .delete()
+        .catchError((e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(e.toString()),
+          duration: Duration(seconds: 2),
+        ),
+      );
+      return e;
+    });
   }
 }

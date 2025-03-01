@@ -1,0 +1,2 @@
+C:/Omar/VS Code Projects/flutter/video_streaming_app/android/app/.cxx/Debug/44s3g674/x86/CMakeFiles/edit_cache.dir
+C:/Omar/VS Code Projects/flutter/video_streaming_app/android/app/.cxx/Debug/44s3g674/x86/CMakeFiles/rebuild_cache.dir

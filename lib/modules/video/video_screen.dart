@@ -1,15 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:hexcolor/hexcolor.dart';
-import 'package:speed_up_flutter/speed_up_flutter.dart';
-import 'package:video_streaming_app/modules/home/cubit/home_cubit.dart';
-import 'package:video_streaming_app/modules/home/home_widgets.dart';
 import 'package:video_streaming_app/modules/video/cubit/video_interactions_cubit.dart';
 import 'package:video_streaming_app/modules/video/video_widgets.dart';
-import 'package:video_streaming_app/shared/components/icons.dart';
-import 'package:video_streaming_app/shared/components/myDivider.dart';
-import 'package:video_streaming_app/shared/components/video_card.dart';
 
 import '../layout/cubit/layout_cubit.dart';
 

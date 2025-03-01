@@ -21,6 +21,88 @@ import 'modules/layout/cubit/layout_cubit.dart';
 import 'modules/layout/layout_screen.dart';
 import 'modules/library/library_screen.dart';
 
+class AppRouter {
+  static final GoRouter _router = GoRouter(
+    initialLocation: userAuthenticated ? '/' : '/login',
+    routes: [
+      ShellRoute(
+        routes: [
+          GoRoute(
+            name: 'home',
+            path: '/',
+            builder: (context, state) => HomeScreen(),
+          ),
+          GoRoute(
+            name: 'library',
+            path: '/library',
+            builder: (context, state) => LibraryScreen(),
+          ),
+        ],
+        builder: (context, state, child) => LayoutScreen(
+          child: child,
+        ),
+      ),
+      GoRoute(
+        name: 'register',
+        path: '/register',
+        builder: (context, state) => RegisterScreen(),
+      ),
+      GoRoute(
+        name: 'login',
+        path: '/login',
+        builder: (context, state) => LoginScreen(),
+      ),
+      GoRoute(
+        name: 'settings',
+        path: '/settings',
+        builder: (context, state) => SettingsScreen(),
+        routes: [
+          GoRoute(
+            name: 'general',
+            path: '/settings/general',
+            builder: (context, state) => GeneralSettings(),
+          ),
+          GoRoute(
+            name: 'account',
+            path: '/settings/account',
+            builder: (context, state) => AccountSettings(),
+          ),
+        ],
+      ),
+      GoRoute(
+        name: 'search',
+        path: '/search',
+        builder: (context, state) => SearchScreen(),
+      ),
+      GoRoute(
+        name: 'history',
+        path: '/history',
+        builder: (context, state) => HistoryScreen(),
+      ),
+      GoRoute(
+        name: 'video',
+        path: '/video',
+        builder: (context, state) {
+          return VideoScreen();
+        },
+      ),
+      GoRoute(
+          name: 'playlists',
+          path: '/playlists',
+          builder: (context, state) => PlaylistsScreen(),
+          routes: [
+            GoRoute(
+              name: 'playlistDetails',
+              path: 'playlists/playlistDetails',
+              builder: (context, state) => SettingsScreen(),
+            ),
+          ]),
+    ],
+  );
+
+  GoRouter get router => _router;
+}
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -32,13 +114,14 @@ Future<void> main() async {
   runApp(const MyApp());
 }
 
+late bool userAuthenticated;
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    late bool userAuthenticated;
     if (uid == null) {
       userAuthenticated = false;
     } else {
@@ -46,83 +129,7 @@ class MyApp extends StatelessWidget {
       print(uid);
     }
     darkThemeValue ??= true;
-    GoRouter router = GoRouter(
-      initialLocation: userAuthenticated ? '/' : '/login',
-      routes: [
-        ShellRoute(
-          routes: [
-            GoRoute(
-              name: 'home',
-              path: '/',
-              builder: (context, state) => HomeScreen(),
-            ),
-            GoRoute(
-              name: 'library',
-              path: '/library',
-              builder: (context, state) => LibraryScreen(),
-            ),
-          ],
-          builder: (context, state, child) => LayoutScreen(
-            child: child,
-          ),
-        ),
-        GoRoute(
-          name: 'register',
-          path: '/register',
-          builder: (context, state) => RegisterScreen(),
-        ),
-        GoRoute(
-          name: 'login',
-          path: '/login',
-          builder: (context, state) => LoginScreen(),
-        ),
-        GoRoute(
-          name: 'settings',
-          path: '/settings',
-          builder: (context, state) => SettingsScreen(),
-          routes: [
-            GoRoute(
-              name: 'general',
-              path: '/settings/general',
-              builder: (context, state) => GeneralSettings(),
-            ),
-            GoRoute(
-              name: 'account',
-              path: '/settings/account',
-              builder: (context, state) => AccountSettings(),
-            ),
-          ],
-        ),
-        GoRoute(
-          name: 'search',
-          path: '/search',
-          builder: (context, state) => SearchScreen(),
-        ),
-        GoRoute(
-          name: 'history',
-          path: '/history',
-          builder: (context, state) => HistoryScreen(),
-        ),
-        GoRoute(
-          name: 'video',
-          path: '/video',
-          builder: (context, state) {
-            return VideoScreen();
-          },
-        ),
-        GoRoute(
-            name: 'playlists',
-            path: '/playlists',
-            builder: (context, state) => PlaylistsScreen(),
-            routes: [
-              GoRoute(
-                name: 'playlistDetails',
-                path: 'playlists/playlistDetails',
-                builder: (context, state) => SettingsScreen(),
-              ),
-            ]),
-      ],
-    );
+
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -135,14 +142,14 @@ class MyApp extends StatelessWidget {
           create: (context) => UserCubit()..loadUserData(),
         ),
         BlocProvider(
-          create: (context) => VideoInteractionsCubit(),
+          create: (context) => VideoInteractionsCubit(context.read<LayoutCubit>()),
         ),
       ],
       child: MaterialApp.router(
         theme: AppTheme.lightTheme,
         darkTheme: AppTheme.darkTheme,
         themeMode: darkThemeValue! ? ThemeMode.dark : ThemeMode.light,
-        routerConfig: router,
+        routerConfig: AppRouter().router,
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,
       ),

@@ -38,6 +38,8 @@ class VideoCard extends StatelessWidget {
     var currentVideoDetails = LayoutCubit.get(context).currentVideoDetails;
     return GestureDetector(
       onTap: () async {
+        
+        // User clicked on one of the video suggestions in the video screen
         if (currentVideoDetails.isNotEmpty) {
           currentVideoDetails.clear();
           currentVideoDetails.addAll({
@@ -57,6 +59,7 @@ class VideoCard extends StatelessWidget {
             context.go('/video');
           });
         } else {
+          // User clicked on a video from the home screen
           currentVideoDetails.addAll({
             'title': title,
             'thumbnail': thumbnail,

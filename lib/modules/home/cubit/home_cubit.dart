@@ -36,6 +36,8 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
+
+
   fetchVideos({videoID}) {
     return StreamBuilder<QuerySnapshot>(
       stream: videos.snapshots(),
@@ -74,6 +76,7 @@ class HomeCubit extends Cubit<HomeState> {
           itemBuilder: (context, index) {
             final DocumentSnapshot<Object?> document =
                 querySnapshot.docs[index];
+              
             if (videoID != document.id) {
               return VideoCard(
                 title: document['title'],

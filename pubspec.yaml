@@ -103,6 +103,7 @@ flutter:
     - assets/Icons/save.png
     - assets/Icons/close.png
     - assets/Icons/play.png
+    - assets/Icons/adjust.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

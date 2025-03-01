@@ -76,6 +76,22 @@ class SettingsIcon extends StatelessWidget {
   }
 }
 
+class AdjustIcon extends StatelessWidget {
+  AdjustIcon({
+    super.key,
+  });
+  var state;
+  @override
+  Widget build(BuildContext context) {
+    return Image.asset(
+      'assets/Icons/adjust.png',
+      width: 18,
+      height: 18,
+      color: darkThemeValue! ? Colors.white : Colors.black,
+    );
+  }
+}
+
 class SearchIcon extends StatelessWidget {
   SearchIcon({
     super.key,
